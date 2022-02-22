@@ -4,6 +4,7 @@ use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostImageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +26,11 @@ Route::prefix('/auth')->group(function() {
 Route::prefix('/post')->group(function() {
     Route::get('/', [PostController::class, 'index']);
     Route::get('/{post}', [PostController::class, 'show']);
+
+    Route::prefix('/{post}/image')->group(function () {
+        Route::get('/', [PostImageController::class, 'index']);
+        Route::get('/{image}', [PostImageController::class, 'show']);
+    });
 });
 
 Route::prefix('/category')->group(function() {
@@ -45,6 +51,12 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::post('/', [PostController::class, 'store']);
         Route::patch('/{post}', [PostController::class, 'update']);
         Route::delete('/{post}', [PostController::class, 'destroy']);
+
+        Route::prefix('/{post}/image')->group(function () {
+            Route::post('/', [PostImageController::class, 'store']);
+            Route::patch('/{image}', [PostImageController::class, 'update']);
+            Route::delete('/{image}', [PostImageController::class, 'destroy']);
+        });
     });
 
     Route::prefix('/category')->group(function() {

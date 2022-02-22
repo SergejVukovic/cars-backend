@@ -9,6 +9,8 @@ use App\Http\Requests\Post\ViewAnyPostRequest;
 use App\Http\Requests\Post\ViewPostRequest;
 use App\Models\Post;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -22,7 +24,7 @@ class PostController extends Controller
     {
         //TODO Add filtering by title, attributes, category
         $posts = (new Post)
-            ->with(['category', 'attributes', 'user'])
+            ->with(['category', 'attributes', 'user', 'images'])
             ->get();
         return response()->json($posts);
     }
@@ -58,7 +60,7 @@ class PostController extends Controller
      */
     public function show(ViewPostRequest $request): JsonResponse
     {
-        $post = (new Post)->with(['category', 'attributes', 'user'])
+        $post = (new Post)->with(['category', 'attributes', 'user', 'images'])
             ->find($request->route('post'));
         return response()->json($post);
     }
@@ -72,7 +74,7 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request): JsonResponse
     {
         $validated = $request->validated();
-        $post = (new Post)->with('attributes')->find($request->route('post'));
+        $post = (new Post)->with(['attributes', 'user', 'images', 'category'])->find($request->route('post'));
         $post->update($validated);
 
         if(isset($validated['attributes'])) {
@@ -92,7 +94,10 @@ class PostController extends Controller
      */
     public function destroy(DestroyPostRequest $request): JsonResponse
     {
-        $post = (new Post)->findOrFail($request->route('post'));
+        $env = App::environment();
+        $post = (new Post)->find($request->route('post'));
+        $folder_path = "{$env}/{$post->id}";
+        Storage::disk('s3')->deleteDirectory($folder_path);
         $post->delete();
         return response()->json($post);
     }
