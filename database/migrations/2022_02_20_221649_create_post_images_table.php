@@ -21,6 +21,8 @@ return new class extends Migration
             $table->integer('index')->default(0);
             $table->boolean('main')->default(false);
             $table->timestamps();
+
+            $table->foreign('post_id')->references('id')->on('posts')->onDelete('CASCADE');
         });
     }
 
