@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $description
  * @property string $description_html
  * @property boolean $active
+ * @property string $slug
  * @property Carbon $created_at
  * @property Carbon $updated_at
  *
@@ -36,6 +37,7 @@ class Post extends Model
         'description_html',
         'category_id',
         'active',
+        'slug'
     ];
 
     public function user():BelongsTo

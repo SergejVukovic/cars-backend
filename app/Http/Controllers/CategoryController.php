@@ -9,6 +9,7 @@ use App\Http\Requests\Category\ViewAnyCategoryRequest;
 use App\Http\Requests\Category\ViewCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -34,6 +35,7 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request): JsonResponse
     {
         $validated = $request->validated();
+        $validated['slug'] = $this->makeSlugFromTitle($validated['title']);
         $category = (new Category)->create($validated);
 
         return response()->json($category);
@@ -62,6 +64,9 @@ class CategoryController extends Controller
     {
         $validated = $request->validated();
         $category = (new Category)->find($request->route('category'));
+        if(isset($validated['title'])) {
+            $validated['slug'] = $this->makeSlugFromTitle($validated['title']);
+        }
         $category->update($validated);
 
         return response()->json($category);
@@ -78,5 +83,20 @@ class CategoryController extends Controller
         $category = (new Category)->findOrFail($request->route('category'));
         $category->delete();
         return response()->json($category);
+    }
+
+    /**
+     * Helper method to generate post slugs
+     *
+     * @param $title
+     * @return string
+     */
+    public function makeSlugFromTitle($title): string
+    {
+        $slug = Str::slug($title);
+
+        $count = (new Category)->whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->count();
+
+        return $count ? "{$slug}-{$count}" : $slug;
     }
 }

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $title
  * @property string $description
  * @property int $parent_id
+ * @property string $slug
  *
  * @property Carbon $created_at
  * @property Carbon $updated_at
@@ -23,6 +24,7 @@ class Category extends Model
     protected $fillable = [
         'title',
         'description',
-        'parent_id'
+        'parent_id',
+        'slug'
     ];
 }

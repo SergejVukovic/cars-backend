@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class CategorySeeder extends Seeder
 {
@@ -1890,7 +1891,7 @@ class CategorySeeder extends Seeder
 
         //CORVET
         DB::table('categories')->insert([
-            ['title'=>'Drugi', 'parent_id'=>'41'],
+            ['title'=>'Drugi', 'parent_id'=>'40'],
             ['title'=>'C3', 'parent_id'=>'40'],
             ['title'=>'C4', 'parent_id'=>'40'],
             ['title'=>'C5', 'parent_id'=>'40'],
@@ -2736,6 +2737,7 @@ class CategorySeeder extends Seeder
 
         //DS AUTOMOBILES
         DB::table('categories')->insert([
+            ['title'=>'Drugi', 'parent_id'=>'98'],
             ['title'=>'DS3', 'parent_id'=>'98'],
             ['title'=>'DS3 Crossback', 'parent_id'=>'98'],
             ['title'=>'DS4', 'parent_id'=>'98'],
@@ -2744,6 +2746,12 @@ class CategorySeeder extends Seeder
             ['title'=>'DS7 Crossback', 'parent_id'=>'98'],
             ['title'=>'DS9', 'parent_id'=>'98']
         ]);
+
+        Category::all(['id', 'title'])->map(function ($category) {
+             $slug = Str::slug($category->title);
+             $count = (new Category)->whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->count();
+             (new Category)->find($category->id)->update(['slug' =>  $count ? "{$slug}-{$count}" : $slug]);
+         });
 
     }
 }
