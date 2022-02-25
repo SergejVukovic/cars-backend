@@ -27,11 +27,11 @@ class StoreAuthRequest extends FormRequest
             'first_name' => ['required', 'string'],
             'last_name' => ['required', 'string'],
             'email' => ['required','email','unique:users,email'],
-            'phone_number' => ['alpha_dash'],
-            'country' => ['required'],
+            'phone_number' => ['string'],
+            'country' => ['string'],
             'city' => ['required'],
-            'address' => ['alpha_dash'],
-            'postcode' => ['required'],
+            'address' => ['string'],
+            'postcode' => ['string'],
             'password' => ['required', 'string']
         ];
     }
