@@ -14,7 +14,11 @@ class ViewPostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return !!(new Post)->findOrFail($this->route('post'));
+        $post_id = $this->route('post');
+        if(is_numeric($post_id)) {
+            return !!(new Post)->findOrFail($post_id);
+        }
+        return !!(new Post)->firstWhere('slug', $post_id);
     }
 
     /**

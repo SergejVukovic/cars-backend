@@ -23,11 +23,15 @@ class PostController extends Controller
      */
     public function index(ViewAnyPostRequest $request): JsonResponse
     {
-        //TODO Add filtering by title, attributes, category
+
         $posts = (new Post)
-            ->with(['category', 'attributes', 'user', 'images'])
-            ->get();
-        return response()->json($posts);
+            ->with(['category', 'attributes', 'user', 'images']);
+        if($request->get('category')) {
+            $posts->where('category_id', $request->get('category'));
+        }
+        $perPage = $request->get('perPage') ?? 20;
+
+        return response()->json($posts->paginate($perPage));
     }
 
 
@@ -62,9 +66,12 @@ class PostController extends Controller
      */
     public function show(ViewPostRequest $request): JsonResponse
     {
-        $post = (new Post)->with(['category', 'attributes', 'user', 'images'])
-            ->find($request->route('post'));
-        return response()->json($post);
+        $post_id = $request->route('post');
+        $post = (new Post)->with(['category', 'attributes', 'user', 'images']);
+        if(is_numeric($post_id)) {
+           return response()->json($post->find($post_id));
+        }
+        return response()->json($post->firstWhere('slug', $post_id));
     }
 
     /**
