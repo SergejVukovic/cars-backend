@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $post_id
  * @property int $attribute_id
+ * @property string $value
  */
 
 class AttributePost extends Model

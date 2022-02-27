@@ -55,11 +55,17 @@ class PostImageController extends Controller
             $image_name = Str::orderedUuid();
             $image_name_with_extension = "{$image_name}.webp";
 
-            $main_image = Image::make($image->path())->resize(500,500)->encode('webp');
+            $main_image = Image::make($image->path())->resize(500,500, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            })->encode('webp');
 
 
             $compressedMainImageStream = $main_image->stream();
-            $compressedProductListingImage = $main_image->resize(250,250)->stream();
+            $compressedProductListingImage = $main_image->resize(250,250, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            })->stream();
 
             Storage::disk('s3')->put("$folder_path/$image_name_with_extension", $compressedMainImageStream);
             Storage::disk('s3')->put("$folder_path/{$image_name}_250x250.webp", $compressedProductListingImage);

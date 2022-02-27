@@ -16,8 +16,7 @@ return new class extends Migration
         Schema::create('attributes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('value');
-            $table->string('group')->nullable();
+            $table->foreignId('parent_id')->nullable();
             $table->timestamps();
         });
     }

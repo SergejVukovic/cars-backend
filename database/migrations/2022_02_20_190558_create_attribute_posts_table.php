@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('attribute_post', function (Blueprint $table) {
             $table->foreignId('post_id');
             $table->foreignId('attribute_id');
+            $table->string('value')->nullable();
         });
     }
 

@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostImageController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -69,6 +70,12 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::post('/', [AttributeController::class, 'store']);
         Route::patch('/{attribute}', [AttributeController::class, 'update']);
         Route::delete('/{attribute}', [AttributeController::class, 'destroy']);
+    });
+
+    Route::prefix('/user')->group(function () {
+        Route::get('/', [UserController::class, 'show']);
+        Route::patch('/', [UserController::class, 'update']);
+        Route::delete('/', [UserController::class, 'destroy']);
     });
 
 });

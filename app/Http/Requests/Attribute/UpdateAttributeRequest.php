@@ -25,8 +25,7 @@ class UpdateAttributeRequest extends FormRequest
     {
         return [
             'name' => ['string', 'unique:attributes,name'],
-            'value' => ['string'],
-            'group' => ['string']
+            'parent_id' => ['exists:attributes,id']
         ];
     }
 }
