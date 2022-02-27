@@ -52,7 +52,9 @@ class Post extends Model
 
     public function attributes(): BelongsToMany
     {
-        return $this->belongsToMany(Attribute::class);
+        return $this->belongsToMany(Attribute::class)
+            ->as('attribute_value')
+            ->withPivot('value');
     }
 
     public function images(): HasMany

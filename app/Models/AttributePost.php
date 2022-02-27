@@ -14,4 +14,9 @@ use Illuminate\Database\Eloquent\Model;
 class AttributePost extends Model
 {
     use HasFactory;
+
+    protected $hidden = [
+        'post_id',
+        'attribute_id'
+    ];
 }

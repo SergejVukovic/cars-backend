@@ -20,7 +20,7 @@ class AttributeController extends Controller
      */
     public function index(ViewAnyAttributeRequest $request): JsonResponse
     {
-        $attributes = (new Attribute)->all();
+        $attributes = (new Attribute)->with('children')->whereNull('parent_id')->get();
         return response()->json($attributes);
     }
 

@@ -25,7 +25,7 @@ class PostController extends Controller
     {
 
         $posts = (new Post)
-            ->with(['category', 'attributes', 'user', 'images']);
+            ->with(['category', 'attributes.parent', 'user', 'images']);
         if($request->get('category')) {
             $posts->where('category_id', $request->get('category'));
         }

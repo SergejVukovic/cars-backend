@@ -895,6 +895,75 @@
 							],
 							"cookie": [],
 							"body": "[\n    {\n        \"id\": 1,\n        \"user_id\": 3,\n        \"category_id\": 1,\n        \"title\": \"Prva Objava\",\n        \"description\": \"Descriptiooooonn\",\n        \"description_html\": null,\n        \"active\": 1,\n        \"created_at\": \"2022-02-20T19:47:41.000000Z\",\n        \"updated_at\": \"2022-02-20T19:47:41.000000Z\"\n    }\n]"
+						},
+						{
+							"name": "Success with attribtues",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/post",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"post"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 27 Feb 2022 21:54:25 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 27 Feb 2022 21:54:25 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.1.2"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"current_page\": 1,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"user_id\": 1,\n            \"category_id\": 358,\n            \"title\": \"Citroen C4 2013\",\n            \"description\": \"Malo preso , baba vozila do pijace 222\",\n            \"description_html\": null,\n            \"active\": 1,\n            \"created_at\": \"2022-02-27T21:01:59.000000Z\",\n            \"updated_at\": \"2022-02-27T21:01:59.000000Z\",\n            \"slug\": \"citroen-c4-2013\",\n            \"category\": {\n                \"id\": 358,\n                \"title\": \"C4\",\n                \"description\": null,\n                \"parent_id\": 4,\n                \"created_at\": null,\n                \"updated_at\": \"2022-02-27T20:24:59.000000Z\",\n                \"slug\": \"c4\"\n            },\n            \"attributes\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"PRICE\",\n                    \"parent_id\": null,\n                    \"created_at\": \"2022-02-27T21:02:14.000000Z\",\n                    \"updated_at\": \"2022-02-27T21:02:14.000000Z\",\n                    \"attribute_value\": {\n                        \"post_id\": 1,\n                        \"attribute_id\": 1,\n                        \"value\": \"1900\"\n                    },\n                    \"parent\": null\n                },\n                {\n                    \"id\": 4,\n                    \"name\": \"Xenon\",\n                    \"parent_id\": 3,\n                    \"created_at\": \"2022-02-27T21:02:37.000000Z\",\n                    \"updated_at\": \"2022-02-27T21:02:37.000000Z\",\n                    \"attribute_value\": {\n                        \"post_id\": 1,\n                        \"attribute_id\": 4,\n                        \"value\": null\n                    },\n                    \"parent\": {\n                        \"id\": 3,\n                        \"name\": \"LIGHTS\",\n                        \"parent_id\": null,\n                        \"created_at\": \"2022-02-27T21:02:27.000000Z\",\n                        \"updated_at\": \"2022-02-27T21:02:27.000000Z\"\n                    }\n                }\n            ],\n            \"user\": {\n                \"id\": 1,\n                \"first_name\": \"PERO\",\n                \"last_name\": \"Doe\",\n                \"email\": \"test@test4.com\",\n                \"phone_number\": \"066-344-333\",\n                \"country\": \"Bosnia and Herzegovina\",\n                \"city\": \"Banja Luka\",\n                \"address\": null,\n                \"postcode\": \"78000\",\n                \"created_at\": \"2022-02-27T20:48:58.000000Z\",\n                \"updated_at\": \"2022-02-27T21:21:52.000000Z\"\n            },\n            \"images\": []\n        }\n    ],\n    \"first_page_url\": \"http://localhost/api/post?page=1\",\n    \"from\": 1,\n    \"last_page\": 1,\n    \"last_page_url\": \"http://localhost/api/post?page=1\",\n    \"links\": [\n        {\n            \"url\": null,\n            \"label\": \"&laquo; Previous\",\n            \"active\": false\n        },\n        {\n            \"url\": \"http://localhost/api/post?page=1\",\n            \"label\": \"1\",\n            \"active\": true\n        },\n        {\n            \"url\": null,\n            \"label\": \"Next &raquo;\",\n            \"active\": false\n        }\n    ],\n    \"next_page_url\": null,\n    \"path\": \"http://localhost/api/post\",\n    \"per_page\": 20,\n    \"prev_page_url\": null,\n    \"to\": 1,\n    \"total\": 1\n}"
 						}
 					]
 				},

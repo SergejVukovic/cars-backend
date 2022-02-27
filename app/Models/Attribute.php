@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
@@ -24,10 +25,6 @@ class Attribute extends Model
       'parent_id'
     ];
 
-    protected $hidden = [
-        'pivot'
-    ];
-
     public function posts(): BelongsToMany
     {
         return $this->belongsToMany(Post::class);
@@ -37,4 +34,10 @@ class Attribute extends Model
     {
         return $this->belongsTo(Attribute::class);
     }
+
+    public function children(): HasMany
+    {
+        return $this->hasMany(Attribute::class, 'parent_id', 'id');
+    }
+
 }
