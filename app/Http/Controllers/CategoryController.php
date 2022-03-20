@@ -21,7 +21,24 @@ class CategoryController extends Controller
      */
     public function index(ViewAnyCategoryRequest $request): JsonResponse
     {
-        $categories = (new Category)->all();
+        $categories = (new Category)
+            ->with('parent')
+            ->get()
+            ->groupBy(function ($category) {
+                if($category->parent) {
+                    return $category->parent->title;
+                }
+                return $category->title;
+            })
+            ->map(function ($category_group) {
+                $main_category = $category_group[0];
+                unset($category_group[0]);
+
+                return [
+                    "main_category" => $main_category,
+                    "children" => $category_group
+                ];
+            });
         return response()->json($categories);
     }
 
@@ -50,7 +67,7 @@ class CategoryController extends Controller
      */
     public function show(ViewCategoryRequest $request): JsonResponse
     {
-        $category = (new Category)->find($request->route('category'));
+        $category = (new Category)->with('parent')->find($request->route('category'));
         return response()->json($category);
     }
 
