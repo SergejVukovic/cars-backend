@@ -2185,12 +2185,18 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/category",
+							"raw": "{{url}}/category?parent=3",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"category"
+							],
+							"query": [
+								{
+									"key": "parent",
+									"value": "3"
+								}
 							]
 						}
 					},

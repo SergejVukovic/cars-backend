@@ -21,25 +21,12 @@ class CategoryController extends Controller
      */
     public function index(ViewAnyCategoryRequest $request): JsonResponse
     {
-        $categories = (new Category)
-            ->with('parent')
-            ->get()
-            ->groupBy(function ($category) {
-                if($category->parent) {
-                    return $category->parent->title;
-                }
-                return $category->title;
-            })
-            ->map(function ($category_group) {
-                $main_category = $category_group[0];
-                unset($category_group[0]);
-
-                return [
-                    "main_category" => $main_category,
-                    "children" => $category_group
-                ];
-            });
-        return response()->json($categories);
+        if($request->get('parent')) {
+            return response()->json((new Category())
+                ->with('children')
+                ->find($request->get('parent')));
+        }
+        return response()->json((new Category())->whereNull('parent_id')->get());
     }
 
 

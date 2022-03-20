@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
@@ -16,6 +17,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ *
+ * @property Category $parent
+ * @property Category[] $children
  */
 
 class Category extends Model
@@ -32,5 +36,10 @@ class Category extends Model
     public function parent(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'parent_id');
+    }
+
+    public function children(): HasMany
+    {
+        return $this->hasMany(Category::class, 'parent_id');
     }
 }
