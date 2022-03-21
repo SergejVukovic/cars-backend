@@ -27,7 +27,10 @@ class PostController extends Controller
         $posts = (new Post)
             ->with(['category', 'attributes.parent', 'user', 'images']);
         if($request->get('category')) {
-            $posts->where('category_id', $request->get('category'));
+            if(is_numeric($request->get('category'))) {
+                $posts->where('category_id', $request->get('category'));
+            }
+            $posts->whereRelation('category','title', $request->get('category'));
         }
         $perPage = $request->get('perPage') ?? 20;
 
