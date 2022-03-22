@@ -7,6 +7,7 @@ use App\Http\Requests\Post\StorePostRequest;
 use App\Http\Requests\Post\UpdatePostRequest;
 use App\Http\Requests\Post\ViewAnyPostRequest;
 use App\Http\Requests\Post\ViewPostRequest;
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\App;
@@ -25,13 +26,28 @@ class PostController extends Controller
     {
 
         $posts = (new Post)
-            ->with(['category', 'attributes.parent', 'user', 'images']);
-        if($request->get('category')) {
-            if(is_numeric($request->get('category'))) {
-                $posts->where('category_id', $request->get('category'));
+            ->with(['category', 'category.parent', 'attributes.parent', 'user', 'images']);
+
+
+        if($request->get('manufacturer')) {
+
+            if(is_numeric($request->get('manufacturer'))) {
+                $posts->whereRelation('category','id', $request->get('manufacturer'));
+                $posts->orWhereRelation('category','parent_id', $request->get('manufacturer'));
+            }else {
+                $manufacturer = (new Category())->where('slug', $request->get('manufacturer'))->first();
+                $posts->whereRelation('category','slug', $request->get('manufacturer'));
+                $posts->orWhereRelation('category','parent_id', $manufacturer->id);
             }
-            $posts->whereRelation('category','title', $request->get('category'));
         }
+
+        if($request->get('model')) {
+            if(is_numeric($request->get('model'))) {
+                $posts->whereRelation('category','id', $request->get('model'));
+            }
+            $posts->whereRelation('category','slug', $request->get('model'));
+        }
+
         $perPage = $request->get('perPage') ?? 20;
 
         return response()->json($posts->paginate($perPage));

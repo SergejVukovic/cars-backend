@@ -26,6 +26,15 @@ class CategoryController extends Controller
                 ->with('children')
                 ->find($request->get('parent')));
         }
+
+        if($request->get('grouped')) {
+            return response()->json(
+                (new Category())
+                    ->with('children')
+                    ->whereNull('parent_id')
+                    ->get());
+        }
+
         return response()->json((new Category())->whereNull('parent_id')->get());
     }
 
@@ -54,7 +63,7 @@ class CategoryController extends Controller
      */
     public function show(ViewCategoryRequest $request): JsonResponse
     {
-        $category = (new Category)->with('parent')->find($request->route('category'));
+        $category = (new Category)->with(['parent', 'children'])->find($request->route('category'));
         return response()->json($category);
     }
 
